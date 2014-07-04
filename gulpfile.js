@@ -51,7 +51,7 @@ gulp.task('js', function() {
 //single entry point
 gulp.task('js', function() {
     return gulp.src('src/scripts/main.js')
-        .pipe(browserify({debug:IS_DEVELOPMENT_ENV}))
+        .pipe(browserify({debug:IS_DEVELOPMENT_ENV, transform: ['hbsfy'], extensions: ['.hbs']}))
         .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
         .pipe(gulp.dest('public/js'))
         .pipe(browserSync.reload({stream:true, once: true}));
