@@ -1,0 +1,9 @@
+{
+  "name": "gulp-boilerplate",
+  "version": "0.0.1",
+  "main": "",
+  "dependencies": {
+  	"underscore":"1.6.0"
+  },
+  "overrides": {}
+}

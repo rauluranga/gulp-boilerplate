@@ -1,0 +1,24 @@
+extend layouts/_index
+block body
+	h1 Jade - node template engine!!!!
+	#container.col
+		if youAreUsingJade
+			p You are amazing
+		else
+			p Get on it!
+		p.
+			Jade is a terse and simple
+			templating language with a
+			strong focus on performance
+			and powerful features.
+
+		section
+			p Neat
+			aside What is it about?
+			article Neat is an open source semantic grid framework built on top of Sass and Bourbon…
+	
+		form(name="login", action="/login", method="post")
+			input(type="text", name="user")
+			input(type="password", name="pass")
+			input(type="submit", value="login")
+	#container.box

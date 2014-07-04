@@ -1,0 +1,25 @@
+@import "bourbon";
+@import "neat";
+@import "variables";
+
+body {
+	color: $red;
+}
+
+.box {
+	width: 250px;
+	height: 768px;
+	background-color: #00ff00;
+}
+
+// Bourbon mixin with Sass
+section {
+  @include linear-gradient(to top, yellow, orange);
+}
+
+// Neat
+section {
+  @include outer-container;
+  aside { @include span-columns(3); }
+  article { @include span-columns(9); }
+}
