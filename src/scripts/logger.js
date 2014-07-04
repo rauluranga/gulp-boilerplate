@@ -1,9 +1,8 @@
-(function(ns) {
-	var logger = {};
-	logger.log = function(argument) {
+
+module.exports = {
+	log: function (string) {
 		if (console) {
-			console.log(argument);
-		}
-	};
-	ns.utils.logger = logger;
-}(App));
+			console.log(string);
+		};
+	} 
+}

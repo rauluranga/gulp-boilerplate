@@ -1,19 +1,18 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
 var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var concat_sm = require('gulp-concat-sourcemap');
+var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
 var browserSync = require('browser-sync');
 var gulpif = require('gulp-if');
 var env = require('node-env-file');
-
-//var browserify = require('gulp-browserify');
-//var shim = require('browserify-shim'); // Make CommonJS-Incompatible Files Browserifyable
+//var shim = require('browserify-shim'); //Make CommonJS-Incompatible Files Browserifyable
 //var changed = require('gulp-changed');
 //var imagemin = require('gulp-imagemin');
+// var concat = require('gulp-concat');
+// var concat_sm = require('gulp-concat-sourcemap');
 
 env('.env');
 
@@ -39,26 +38,34 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 
+/*/
+//without browserify
 gulp.task('js', function() {
     return gulp.src(['src/scripts/config.js', 'src/scripts/logger.js', 'src/scripts/main.js'])
-        //.pipe(gulpif(IS_PRODUCTION_ENV, concat('app.js')))
-        //.pipe(gulpif(IS_DEVELOPMENT_ENV, concat_sm('app.js', {sourcesContent: true})))
         .pipe(concat_sm('app.js', {sourcesContent: IS_DEVELOPMENT_ENV}))
         .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
         .pipe(gulp.dest('public/js'))
         .pipe(browserSync.reload({stream:true, once: true}));
 });
+/*/
+//single entry point
+gulp.task('js', function() {
+    return gulp.src('src/scripts/main.js')
+        .pipe(browserify({debug:IS_DEVELOPMENT_ENV}))
+        .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
+        .pipe(gulp.dest('public/js'))
+        .pipe(browserSync.reload({stream:true, once: true}));
+});
+//*/
 
 gulp.task('sass', function() {
 
     var config = { };
     config.includePaths = require('node-neat').includePaths;
-    
+
     if (IS_DEVELOPMENT_ENV) {
         config.sourceComments = 'map';
-    }
-
-    if (IS_PRODUCTION_ENV) {
+    } else {
         config.outputStyle = 'compressed';
     }
 
@@ -68,16 +75,6 @@ gulp.task('sass', function() {
         .pipe(browserSync.reload({stream:true}));
 });
 
-
-
-// //single entry point
-// gulp.task('browserify', function() {
-//     return gulp.src('src/scripts/main.js')
-//         .pipe(browserify({debug:IS_DEVELOPMENT_ENV}))
-//         //.pipe(concat('app.js'))
-//         .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
-//         .pipe(gulp.dest('public/js'))
-// });
 
 // minify new images
 // gulp.task('imagemin', function() {
