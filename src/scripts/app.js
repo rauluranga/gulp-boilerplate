@@ -1,6 +1,6 @@
 
 var logger = require('./logger');
-var template = require('./templates/template');
+var template = require('./templates/template.hbs');
 
 module.exports = {
 	setup: function () {

@@ -1,7 +1,8 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
 var jshint = require('gulp-jshint');
-var browserify = require('gulp-browserify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
@@ -21,7 +22,7 @@ var IS_DEVELOPMENT_ENV = env === 'development';
 var IS_PRODUCTION_ENV = env === 'production';
 
 gulp.task('clean', function() {
-    return gulp.src('public/**', { read: false })
+    return gulp.src('public/**/*', { read: false })
     .pipe(rimraf());
 });
 
@@ -48,14 +49,16 @@ gulp.task('js', function() {
         .pipe(browserSync.reload({stream:true, once: true}));
 });
 /*/
-//single entry point
 gulp.task('js', function() {
-    return gulp.src('src/scripts/main.js')
-        .pipe(browserify({debug:IS_DEVELOPMENT_ENV, transform: ['hbsfy'], extensions: ['.hbs']}))
+    return browserify('./src/scripts/main.js')
+        .bundle({debug:IS_DEVELOPMENT_ENV})
+        .pipe(source('main.js'))
         .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
-        .pipe(gulp.dest('public/js'))
+        .pipe(gulp.dest('./public/js'))
         .pipe(browserSync.reload({stream:true, once: true}));
 });
+
+
 //*/
 
 gulp.task('sass', function() {
@@ -110,5 +113,5 @@ gulp.task('browserSync', function() {
     });
 });
 
-gulp.task('default', ['lint','js', 'sass', 'jade', 'browserSync', 'watch']);
+gulp.task('default', ['clean', 'lint','js', 'sass', 'jade', 'browserSync', 'watch']);
 
