@@ -39,16 +39,7 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 
-/*/
-//without browserify
-gulp.task('js', function() {
-    return gulp.src(['src/scripts/config.js', 'src/scripts/logger.js', 'src/scripts/main.js'])
-        .pipe(concat_sm('app.js', {sourcesContent: IS_DEVELOPMENT_ENV}))
-        .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
-        .pipe(gulp.dest('public/js'))
-        .pipe(browserSync.reload({stream:true, once: true}));
-});
-/*/
+//@see package.json for browserify and browserify-shim configuration.
 gulp.task('js', function() {
     return browserify('./src/scripts/main.js')
         .bundle({debug:IS_DEVELOPMENT_ENV})
@@ -57,9 +48,6 @@ gulp.task('js', function() {
         .pipe(gulp.dest('./public/js'))
         .pipe(browserSync.reload({stream:true, once: true}));
 });
-
-
-//*/
 
 gulp.task('sass', function() {
 
