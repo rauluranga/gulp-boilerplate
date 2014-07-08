@@ -12,8 +12,10 @@ var env = require('node-env-file');
 //var shim = require('browserify-shim'); //Make CommonJS-Incompatible Files Browserifyable
 //var changed = require('gulp-changed');
 //var imagemin = require('gulp-imagemin');
-// var concat = require('gulp-concat');
-// var concat_sm = require('gulp-concat-sourcemap');
+var concat = require('gulp-concat');
+//var concat_sm = require('gulp-concat-sourcemap');
+var gulpBowerFiles = require('gulp-bower-files');
+var merge = require('merge-stream');
 
 env('.env');
 
@@ -36,7 +38,7 @@ gulp.task('jade', function() {
 gulp.task('lint', function() {
     return gulp.src('src/scripts/**/*.js')
         .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(jshint.reporter('jshint-stylish'));
 });
 
 //@see package.json for browserify and browserify-shim configuration.
@@ -47,6 +49,18 @@ gulp.task('js', function() {
         .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
         .pipe(gulp.dest('./public/js'))
         .pipe(browserSync.reload({stream:true, once: true}));
+});
+
+//bower + vendor libs joined in to single file
+gulp.task("libs", function() {
+
+    var bower = gulpBowerFiles();
+    var vendor = gulp.src('./vendor/**/*.js');
+
+    merge(bower, vendor)
+    .pipe(concat('vendor.js'))
+    .pipe(gulpif(IS_PRODUCTION_ENV,uglify()))
+    .pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('sass', function() {

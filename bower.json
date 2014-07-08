@@ -3,7 +3,14 @@
   "version": "0.0.1",
   "main": "",
   "dependencies": {
-  	"underscore":"1.6.0"
+  	"underscore":"1.6.0",
+  	"q":"1.0.1"
   },
-  "overrides": {}
+  "overrides": {
+    "q": {
+       "main": [
+          "q.js"
+       ]
+    }
+ }
 }
