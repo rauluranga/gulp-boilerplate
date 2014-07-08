@@ -3,13 +3,19 @@
   "version": "0.0.1",
   "main": "",
   "dependencies": {
-  	"underscore":"1.6.0",
-  	"q":"1.0.1"
+    "q":"1.0.1",
+  	"gsap":"1.12.1"
   },
   "overrides": {
     "q": {
        "main": [
           "q.js"
+       ]
+    },
+    "gsap": {
+       "main": [
+          "./src/uncompressed/TweenLite.js",
+          "./src/uncompressed/TimelineLite.js"
        ]
     }
  }

@@ -9,7 +9,7 @@ var rimraf = require('gulp-rimraf');
 var browserSync = require('browser-sync');
 var gulpif = require('gulp-if');
 var env = require('node-env-file');
-//var shim = require('browserify-shim'); //Make CommonJS-Incompatible Files Browserifyable
+var shim = require('browserify-shim');
 //var changed = require('gulp-changed');
 //var imagemin = require('gulp-imagemin');
 var concat = require('gulp-concat');
@@ -70,7 +70,6 @@ gulp.task('sass', function() {
 
     if (IS_DEVELOPMENT_ENV) {
         config.sourceComments = 'map';
-    } else {
         config.outputStyle = 'compressed';
     }
 
@@ -100,12 +99,6 @@ gulp.task('watch', function() {
 
 gulp.task('browserSync', function() {
 
-   //  var files = [
-   //    'public/**/*.html',
-   //    'public/css/**/*.css',
-   //    'public/js/**/*.js'
-   // ];
-
     browserSync.init(null, {
         //proxy: "192.168.33.174",
         server: {
@@ -115,5 +108,5 @@ gulp.task('browserSync', function() {
     });
 });
 
-gulp.task('default', ['clean', 'lint','js', 'sass', 'jade', 'browserSync', 'watch']);
+gulp.task('default', ['libs', 'lint','js', 'sass', 'jade', 'browserSync', 'watch']);
 
