@@ -29,7 +29,7 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
    ```   
 
 
-be amazed by all BrowserSync goddies.
+be amazed by all BrowserSync goodies.
 
 enjoy!
 
