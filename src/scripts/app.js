@@ -38,17 +38,21 @@ module.exports = {
 	},
 	setup: function () {
 
+		//Custom module Test
 		var message = StringUtils.toLower("Hurray, it works!");
-
 		appLogger.log(message);
 
+		//Handlerbars Test
 		document.getElementById("template-container").innerHTML = template({ name: "Raul Uranga!" });
 
+		//TweenLite Test
 		TweenLite.to($(".box"), 1.5, {width:350, ease:Bounce.easeOut});
 
+		//lodash Test
 		var restult  = _.map([1, 2, 3], function(num) { return num * 3; });
 		appLogger.log(restult);
 
+		//Q Test
 		this.one()
 		.then(this.two)
 		.then(function () {
