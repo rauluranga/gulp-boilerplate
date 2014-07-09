@@ -1,6 +1,6 @@
 #gulp boilerplate
 
-Starting project for static webapps.
+Starting project for webapps.
 
 * compiles SASS.
 * compiles Jade.
